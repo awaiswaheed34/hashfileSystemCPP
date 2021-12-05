@@ -37,7 +37,13 @@ bool HashTable::insert(File file){
 }
 
 bool HashTable::remove(File file){
-    
+    for (int i = 0; i < m_size1; i++)
+    {
+        if (m_table1[i] == file)
+        {
+            m_table1[i] = File("DELETED", 0);
+        }
+    }
     return true;
 }
 
