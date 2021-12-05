@@ -2,31 +2,51 @@
 #include "hash.h"
 #include "math.h"
 HashTable::HashTable(unsigned size, hash_fn hash){
-    
+    this->m_hash = hash;
+    this->m_table1 = new File[size];
+    this->m_table2 = new File[size];
+    this->m_size1 = 1;
+    m_capacity1 = size;
 }
 
 HashTable::~HashTable(){
-    
 }
 
 File HashTable::getFile(string name, unsigned int diskBlock){
+    for (int i = 0; i < m_size1; i++)
+    {
+        if (m_table1[i].key() == name and m_table1[i].diskBlock() == diskBlock)
+        {
+            return m_table1[i];
+        }
+    }
     
 }
 
 bool HashTable::insert(File file){
-    
+    if (m_size1<m_capacity1)
+    {
+        m_table1[m_size1] = file;
+        this->m_size1 += 1;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool HashTable::remove(File file){
     
+    return true;
 }
 
 float HashTable::lambda(TABLENAME tablename) const {
-      
+    return numEntries(tablename)/tableSize(tablename);
 }
 
 float HashTable::deletedRatio(TABLENAME tableName) const {
-    
+    return m_numDeleted1 / m_size1;
 }
 
 void HashTable::dump() const {
